@@ -56,7 +56,7 @@ namespace CombatTargetingSystem
         public float w_targetIsDamaged;
     }
 
-    [BepInPlugin("projjm.combattargetingsystem", "Combat Targeting System", "1.0.0")]
+    [BepInPlugin("projjm.combattargetingsystem", "Combat Targeting System", "1.1.0")]
     [BepInProcess("valheim.exe")]
 
     public class CombatTargetingSystem : BaseUnityPlugin
@@ -107,7 +107,7 @@ namespace CombatTargetingSystem
 
         private static string ModName = "Targetting System Mod";
         private static ModConfig CFG;
-        private readonly Harmony Harmony = new Harmony("projjm.improvedswimming");
+        private readonly Harmony Harmony = new Harmony("projjm.combattargetingsystem");
         private static TargetSystem targetSystem;
        
         private static bool HudDistancePatched = false;
@@ -212,7 +212,7 @@ namespace CombatTargetingSystem
             CFG.focusmaxDistanceDefault = c_focusmaxDistanceDefault.Value;
             c_focusmaxDistanceAfterRun = Config.Bind("Camera Focussing", "focusMaxDistanceAfterRun", 7.5f, "Max distance to focus camera on a target after running");
             CFG.focusmaxDistanceAfterRun = c_focusmaxDistanceAfterRun.Value;
-            c_focusmaxDistanceWhenInside = Config.Bind("Camera Focussing", "focusMaxDistanceWhenInside", 6.0f, "Max distance to focus camera on a target when inside (dungeons)");
+            c_focusmaxDistanceWhenInside = Config.Bind("Camera Focussing", "focusMaxDistanceWhenInside", 5.0f, "Max distance to focus camera on a target when inside (dungeons)");
             CFG.focusmaxDistanceWhenInside = c_focusmaxDistanceWhenInside.Value;
             c_focusEndDelay = Config.Bind("Camera Focussing", "focusEndDelay", 1.5f, "Number of seconds after camera has reached target to smooth out motion");
             CFG.focusEndDelay = c_focusEndDelay.Value;
