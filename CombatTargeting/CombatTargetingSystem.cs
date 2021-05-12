@@ -56,7 +56,7 @@ namespace CombatTargetingSystem
         public float w_targetIsDamaged;
     }
 
-    [BepInPlugin("projjm.combattargetingsystem", "Combat Targeting System", "1.1.0")]
+    [BepInPlugin("projjm.combattargetingsystem", "Combat Targeting System", "1.1.1")]
     [BepInProcess("valheim.exe")]
 
     public class CombatTargetingSystem : BaseUnityPlugin
