@@ -271,16 +271,27 @@ namespace CombatTargetingSystem
         {
             public static bool Prefix(Attack __instance, out Transform originJoint, out Vector3 attackDir)
             {
-                Humanoid character = __instance.m_character;
+                Humanoid character;
+                if (__instance != null && __instance.m_character != null)
+                {
+                    character = __instance.m_character;
+                }
+                else
+                {
+                    originJoint = null;
+                    attackDir = Vector3.zero;
+                    return false;
+                }
+
                 originJoint = __instance.GetAttackOrigin();
                 Vector3 forward = character.transform.forward;
-                Vector3 aimDir = __instance.m_character.GetAimDir(originJoint.position);
+                Vector3 aimDir = character.GetAimDir(originJoint.position);
                 aimDir.x = forward.x;
                 aimDir.z = forward.z;
                 aimDir.Normalize();
                 
 
-                if (ModEnabled && character == Player.m_localPlayer && targetSystem != null && targetSystem.HasTarget() && __instance.m_attackType != Attack.AttackType.Area)
+                if (ModEnabled && character == Player.m_localPlayer && targetSystem != null && !character.IsDead() && targetSystem.HasTarget() && __instance.m_attackType != Attack.AttackType.Area)
                 {
                     Character target = targetSystem.GetCurrentTarget();
                     attackDir = (target.transform.position - character.transform.position).normalized;
@@ -302,7 +313,12 @@ namespace CombatTargetingSystem
                 bool quickTurn = false;
                 bool isAttacking = false;
 
-                Character character = __instance;
+                Character character;
+                if (__instance != null)
+                    character = __instance;
+                else
+                    return false;
+
                 Player pCharacter = null;
 
                 if (character is Player)
