@@ -56,7 +56,7 @@ namespace CombatTargetingSystem
         public float w_targetIsDamaged;
     }
 
-    [BepInPlugin("projjm.combattargetingsystem", "Combat Targeting System", "1.1.2")]
+    [BepInPlugin("projjm.combattargetingsystem", "Combat Targeting System", "1.1.3")]
     [BepInProcess("valheim.exe")]
 
     public class CombatTargetingSystem : BaseUnityPlugin
@@ -490,6 +490,21 @@ namespace CombatTargetingSystem
                         renderers.ToList().ForEach(renderer => renderer.SetAlpha(0.15f));
                     }
                 }
+            }
+        }
+
+        [HarmonyPatch(typeof(Player), nameof(Player.AlwaysRotateCamera))]
+        class FixGamepadRotationalBug
+        {
+            public static void Prefix(bool __state)
+            {
+                __state = ZInput.instance.m_mouseActive;
+                ZInput.instance.m_mouseActive = true;
+            }
+
+            public static void Postfix(bool __state)
+            {
+                ZInput.instance.m_mouseActive = __state;
             }
         }
 
