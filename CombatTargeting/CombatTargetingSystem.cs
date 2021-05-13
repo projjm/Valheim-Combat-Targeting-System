@@ -463,6 +463,7 @@ namespace CombatTargetingSystem
 
                 foreach (KeyValuePair<Character, EnemyHud.HudData> hudPair in __instance.m_huds)
                 {
+                    Character character = hudPair.Key;
                     EnemyHud.HudData hud = hudPair.Value;
 
                     if (hud == null)
@@ -471,6 +472,10 @@ namespace CombatTargetingSystem
                     GameObject gui = hud.m_gui.gameObject;
                     if (gui == null)
                         continue;
+
+                    bool isEnemy = character.IsMonsterFaction() || character.IsBoss() || character.m_faction == Character.Faction.Boss;
+                    if (!isEnemy)
+                        return;
 
                     CanvasRenderer[] renderers = gui.GetComponentsInChildren<CanvasRenderer>();
                     if (renderers.Length == 0)

@@ -371,7 +371,7 @@ namespace CombatTargetingSystem
             _nearbyEnemies.Clear();
             foreach (Character character in Character.GetAllCharacters())
             {
-                if (character.IsMonsterFaction() || character.IsBoss())
+                if (character.IsMonsterFaction() || character.IsBoss() || character.m_faction == Character.Faction.Boss)
                 {
                     float distance = Vector3.Distance(transform.position, character.transform.position);
                     if (distance < _cfg.targetMaxDistance && !character.IsDead() && character != null)
