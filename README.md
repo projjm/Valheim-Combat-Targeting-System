@@ -37,4 +37,25 @@ If you find that the targeting feels a little off for your playstyle, I encourag
 This mod is still in the very early stages and I appreciate any feedback that you might have. If you encounter a bug please report it whenever you can so that I can fix it in the following update. Also, if you've discovered a configuration that works really well for you then I encourage you to share it with others.
 In terms of mod compatibility, I have not tested many mods other than the ones I use regularly. If you discover an incompatibility then depending on the difficulty I will attempt to make it compatible. Thanks!
 
+# Changelog
+        Version 1.1.4
+            Fixed Key Hints HUD flickering during combat and mouse flickering in inventory
+            Fixed character's head not rotating towards target
+            Fixed sprint issue with gamepad and camera focus
+        Version 1.1.3
+            Fixed major bug - When using a gamepad, attacks would not rotate towards target when standing still.
+        Version 1.1.2
+            Fixed bug where certain boss enemies (i.e. roots from The Elder) could not be targeted.
+            Fixed bug where other player's nameplate HUDs would be transparent.
+        Version 1.1.1
+            Small bug prevention fixes - some patches continued to run when disabled.
+            Critical bug fix - Removed an attack rotation bug that caused the player to be unable to hit characters.
+        Version 1.1.0
+            Added new camera focus variables for when the player is inside a dungeon (configurable)
+            Fixed main patches running even when the mod is disabled.
+            Added extra configs (Disable camera focus via keybind, synced with config)
+            Added gamepad support for locking target (double tap the Interact button by default, configurable)
+        Version 1.0.0
+            Combat Targeting System initial release
+            
 Nexus Link: https://www.nexusmods.com/valheim/mods/1197
