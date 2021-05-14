@@ -113,9 +113,12 @@ namespace CombatTargetingSystem
         private static bool HudDistancePatched = false;
 
         private static bool ModEnabled = true;
-        private static KeyCode ToggleModKey = KeyCode.F8;
-        private static List<ItemDrop.ItemData.ItemType> NCHWeapons;
 
+        private static bool UserSettingShowHints = false;
+        private static bool ForceHideKeyHints = false;
+
+        private static List<ItemDrop.ItemData.ItemType> NCHWeapons;
+        
         // Hash
         private static int turn_speed = ZSyncAnimation.GetHash("turn_speed");
 
@@ -237,10 +240,39 @@ namespace CombatTargetingSystem
         [HarmonyPatch(typeof(Player), nameof(Player.Update))]
         class AttachGameObject
         {
+            // Fix HUD Flickering Issue by disabling key hints during combat (Caused by forcing mouse active to true)
+            public static void Prefix(Player __instance)
+            {
+                if (!ModEnabled)
+                    return;
+
+                if (__instance != Player.m_localPlayer)
+                    return;
+
+                if (targetSystem != null && targetSystem.HasTarget() && !Helper.IsInInventoryEtc()) // In combat
+                {
+                    ZInput.instance.m_mouseActive = true;
+                    if (ForceHideKeyHints == false)
+                    {
+                        UserSettingShowHints = KeyHints.instance.m_keyHintsEnabled;
+                        ForceHideKeyHints = true;
+                        KeyHints.instance.m_keyHintsEnabled = false;
+                    }
+                }
+                else // Out of combat
+                {
+                    if (ForceHideKeyHints == true)
+                    {
+                        ForceHideKeyHints = false;
+                        KeyHints.instance.m_keyHintsEnabled = UserSettingShowHints;
+                    }
+                }
+            }
+
             public static void Postfix(Player __instance)
             {
-                if (Input.GetKeyDown(ToggleModKey))
-                {
+                  if (Input.GetKeyDown(c_toggleModKey.Value))
+                  {
                     ModEnabled = !ModEnabled;
 
                     if (!ModEnabled && targetSystem)
@@ -493,20 +525,34 @@ namespace CombatTargetingSystem
             }
         }
 
-        [HarmonyPatch(typeof(Player), nameof(Player.AlwaysRotateCamera))]
-        class FixGamepadRotationalBug
+        [HarmonyPatch(typeof(CharacterAnimEvent), nameof(CharacterAnimEvent.UpdateHeadRotation))]
+        class FixHeadRotation
         {
-            public static void Prefix(bool __state)
+            public static void Prefix(CharacterAnimEvent __instance)
             {
-                __state = ZInput.instance.m_mouseActive;
-                ZInput.instance.m_mouseActive = true;
-            }
+                if (!ModEnabled)
+                    return;
 
-            public static void Postfix(bool __state)
-            {
-                ZInput.instance.m_mouseActive = __state;
+                if (targetSystem == null || !targetSystem.HasTarget())
+                    return;
+
+                __instance.m_lookAt = targetSystem.GetCurrentTarget().transform;
             }
         }
+
+
+        public static class Helper
+        {
+            public static bool IsInInventoryEtc()
+            {
+                if (!InventoryGui.IsVisible() && !Minimap.IsOpen() && !StoreGui.IsVisible())
+                {
+                    return Hud.IsPieceSelectionVisible();
+                }
+                return true;
+            }
+        }
+
 
         #endregion 
 

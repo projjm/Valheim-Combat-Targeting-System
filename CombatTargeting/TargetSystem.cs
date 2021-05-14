@@ -319,7 +319,7 @@ namespace CombatTargetingSystem
 
         public void FocusOnTarget(Character target)
         {
-            bool _focusEnabled = _cameraFocusEnabled && target != null && (!_cfg.focusDisableOnRun || (_cfg.focusDisableOnRun && (!_player.IsRunning() && !ZInput.GetButton("Run"))))
+            bool _focusEnabled = _cameraFocusEnabled && target != null && (!_cfg.focusDisableOnRun || (_cfg.focusDisableOnRun && (!_player.IsRunning() && !ZInput.GetButton("Run") && !ZInput.GetButton("JoyRun"))))
                 && (!_cfg.focusDisbledWhenInside || (_cfg.focusDisbledWhenInside && !_player.InInterior()));
 
             if (!_focusEnabled)
