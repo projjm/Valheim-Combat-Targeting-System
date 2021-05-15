@@ -1,4 +1,4 @@
-# Valheim Combat Targeting System Mod
+# Valheim - Combat Targeting System Mod
 
 ### About
 This mod implements a soft-lock targeting system during combat, similar to games such as Witcher 3.
