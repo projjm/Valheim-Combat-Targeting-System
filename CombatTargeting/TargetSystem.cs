@@ -379,8 +379,8 @@ namespace CombatTargetingSystem
                         _nearbyEnemies.Add(character);
                         //if (character != _currentTarget)
                             //UpdateCharacterHud(character, false);
-                        if (!EnemyHud.m_instance.m_huds.ContainsKey(character))
-                            EnemyHud.m_instance.ShowHud(character);
+                        /*if (!EnemyHud.m_instance.m_huds.ContainsKey(character))
+                            EnemyHud.m_instance.ShowHud(character);*/
                         EnemyHud.m_instance.m_huds[character].m_hoverTimer = 0f;
                     }
                 }
